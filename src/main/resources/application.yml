@@ -1,20 +1,27 @@
 server:
-  port: 9191
+  port: 4000
+
+management:
+  endpoint.gateway.enabled: true
+  endpoints.web.exposure.include: gateway
 
 spring:
   application:
     name: API-GATEWAY
   cloud:
     gateway:
+      discovery.locator.enabled: true
       routes:
         - id: CLIENT-SERVICE
           uri: lb://CLIENT-SERVICE
           predicates:
             - Path=/client/**
-        - id: CAR-SERVICE
-          uri: lb://CAR-SERVICE
+        - id: ARTICLE-SERVICE
+          uri: lb://ARTICLE-SERVICE
           predicates:
-            - Path=/car/**
+            - Path=/article/**
+          filters:
+            - AuthFilter
 
 eureka:
   client:
