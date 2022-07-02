@@ -12,14 +12,14 @@ spring:
     gateway:
       discovery.locator.enabled: true
       routes:
-        - id: CLIENT-SERVICE
-          uri: lb://CLIENT-SERVICE
+        - id: SCIENTIST-SERVICE
+          uri: lb://SCIENTIST-SERVICE
           predicates:
-            - Path=/client/**
+            - Path=/v1/api/scientist/**
         - id: ARTICLE-SERVICE
           uri: lb://ARTICLE-SERVICE
           predicates:
-            - Path=/article/**
+            - Path=/v1/api/article/**
           filters:
             - AuthFilter
 
