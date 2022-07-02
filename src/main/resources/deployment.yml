@@ -1,0 +1,39 @@
+kind: Service # Kubernetes resource kind we are creating
+apiVersion: v1 # Kubernetes API version
+metadata: # Metadata of the resource kind we are creating
+  name: api-gateway
+  labels:
+    name: api-gateway
+spec:
+  ports:
+    - protocol: TCP
+      port: 4000 # The port that the service is running on in the cluster
+      targetPort: 4000 # The port exposed by the service
+      nodePort: 31100
+  selector:
+    app: api-gateway
+  type: NodePort # type of the service.
+
+---
+
+apiVersion: apps/v1
+kind: Deployment # Kubernetes resource kind we are creating
+metadata:
+  name: api-gateway
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  replicas: 2 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: api-gateway:v2
+          # Image that will be used to containers in the cluster
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4000
