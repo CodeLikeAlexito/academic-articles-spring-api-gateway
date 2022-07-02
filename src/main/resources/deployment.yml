@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: api-gateway:v2
+          image: api-gateway:v4
           # Image that will be used to containers in the cluster
           imagePullPolicy: IfNotPresent
           ports:
